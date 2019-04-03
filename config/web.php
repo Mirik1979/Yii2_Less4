@@ -16,9 +16,14 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'auth'=>['class'=>\app\components\AuthComponent::class],
         'activity'=> ['class'=> \app\components\ActivityComponent::class,
                 'modelclass' => \app\models\TestForm::class
             ],
+        'rbac'=>['class'=>\app\components\RbacComponent::class],
+        'authManager'=>[
+            'class'=>\yii\rbac\DbManager::class
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'xx7jq_l4QfJ8VJtmTqdKRv4bGSZGWzzi',
@@ -27,7 +32,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Users',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
