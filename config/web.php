@@ -17,6 +17,7 @@ $config = [
     ],
     'components' => [
         'auth'=>['class'=>\app\components\AuthComponent::class],
+        'newact'=>['class'=>\app\components\NewActivityComponent::class],
         'activity'=> ['class'=> \app\components\ActivityComponent::class,
                 'modelclass' => \app\models\TestForm::class
             ],

@@ -17,34 +17,35 @@ use yii\web\HttpException;
 
 class TestController extends Controller
 {
-
     public function actionPage()
     {
         if(!\Yii::$app->rbac->canCreateActivity()){
             throw new HttpException(403,'Not access create activity');
         }
+        $form_model = \Yii::$app->newact->getModel();
+        $userid = \Yii::$app->user->id;
 
-        $form_model = \Yii::$app->activity->getModel();
-
-        if($form_model->load(\Yii::$app->request->post())){
-            $form_model->file=UploadedFile::getInstance($form_model, 'file');
-            $comp = \Yii::createObject(['class'=>FileServiceComponent::class]);
-
-            if ($form_model->validate()) {
-                $saveFile = $comp->saveUploadedFile($form_model->file);
-                $formres = \Yii::$app->request->post();
-                $compplus = \Yii::createObject(['class'=>DaoComponent::class]);
-                $compplus->insertActivity($form_model->name, $form_model->email, $form_model->begin,
-                    $form_model->end, $form_model->notify);
-                return $this->render('formresult', compact('formres'));
-
+        if($form_model->load(\Yii::$app->request->post())) {
+            $form_model['user_id'] = $userid;
+            if (\Yii::$app->newact->createActivity($form_model)) {
+                    return $this->redirect(['/test/view']);
             }
 
         }
-
-
         return $this->render('page', compact('form_model'));
-
-
     }
+
+    public function actionView() {
+        if(\Yii::$app->rbac->editViewAllAcitivity()){
+            $testaction = TestForm::find()->limit(50)->all();
+        } else {
+            $userid = \Yii::$app->user->id;
+            $testaction = TestForm::find()->andWhere(['user_id'=>$userid])->all();
+        }
+
+        return $this->render('view',
+            ['data' => $testaction]
+        );
+    }
+
 }
