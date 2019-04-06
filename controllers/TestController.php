@@ -13,12 +13,16 @@ use app\components\DaoComponent;
 use yii\web\Controller;
 use app\models\TestForm;
 use yii\web\UploadedFile;
+use yii\web\HttpException;
 
 class TestController extends Controller
 {
 
     public function actionPage()
     {
+        if(!\Yii::$app->rbac->canCreateActivity()){
+            throw new HttpException(403,'Not access create activity');
+        }
 
         $form_model = \Yii::$app->activity->getModel();
 

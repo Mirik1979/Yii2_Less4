@@ -26,7 +26,7 @@ class TestForm extends Model
     public function rules()
     {
         return [
-            [['name','email', 'begin', 'notify', 'file'], 'required'],
+            [['name','email', 'begin', 'end', 'notify', 'file'], 'required'],
             ['email', 'email'],
             ['file','file', 'extensions' => ['jpg']],
             ['name', 'isAdmin'],
