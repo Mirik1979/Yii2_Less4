@@ -48,6 +48,14 @@ class RbacComponent extends Component
 
     }
 
+    public function assignRbac($userid): bool
+    {
+        $authManager = $this->getAuthManager();
+        $role = $authManager->getRole('user');
+        $authManager->assign($role, $userid);
+        return true;
+    }
+
     public function canCreateActivity(): bool
     {
         return \Yii::$app->user->can('create_activity');

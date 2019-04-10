@@ -48,4 +48,9 @@ class TestController extends Controller
         );
     }
 
+    public function actionCalendarview() {
+        return $this->render('calendarview',
+            []
+        );
+    }
 }

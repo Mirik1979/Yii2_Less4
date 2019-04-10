@@ -54,7 +54,7 @@ class AuthComponent extends Component
      * @param $model Users
      * @return bool
      */
-    public function createUser(&$model):bool{
+    public function createUser(&$model):int {
         $model->setRegisterScenario();
         if(!$model->validate(['password','email'])){
             return false;
@@ -62,9 +62,9 @@ class AuthComponent extends Component
         $model->password_hash=$this->generatePasswordHash($model->password);
         $model->auth_key=$this->generateAuthKey();
         if(!$model->save()){
-            return false;
+            return 0;
         }
-        return true;
+        return $model->id;
     }
     private function generateAuthKey(){
         return \Yii::$app->security->generateRandomString();
