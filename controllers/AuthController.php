@@ -19,11 +19,16 @@ class AuthController extends Controller
 
         if(\Yii::$app->request->isPost){
             $model=\Yii::$app->auth->getModel(\Yii::$app->request->post());
-            if(\Yii::$app->auth->createUser($model)){
-                return $this->redirect(['/']);
+            $id = \Yii::$app->auth->createUser($model);
+            if($id != 0){
+                if (\Yii::$app->rbac->assignRbac($id)) {
+                    //return $this->redirect(['/auth/sign-in']);
+                    if(\Yii::$app->auth->authUser($model)){
+                        return $this->redirect(['/test/page']);
+                    }
+                }
             }
         }
-
         return $this->render('signup',['model'=>$model]);
     }
 
