@@ -43,7 +43,7 @@ class RbacComponent extends Component
         $authManager->addChild($user,$view_activity);
         $authManager->addChild($admin,$user);
         $authManager->addChild($admin,$editViewAllActivity);
-        $authManager->assign($admin,1);
+        $authManager->assign($admin,5);
         $authManager->assign($user,6);
 
     }
@@ -51,6 +51,11 @@ class RbacComponent extends Component
     public function canCreateActivity(): bool
     {
         return \Yii::$app->user->can('create_activity');
+    }
+
+    public function editViewAllAcitivity(): bool
+    {
+        return \Yii::$app->user->can('editViewAllActivity');
     }
 
 

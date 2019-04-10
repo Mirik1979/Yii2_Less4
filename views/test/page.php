@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 <?= $form->field($form_model, 'email')->textInput()->label('Эл адрес участника'); ?>
 <?= $form->field($form_model, 'begin')->input( 'date')->label('Дата начала'); ?>
 <?= $form->field($form_model, 'end')->input('date')->label('Дата окончания'); ?>
+<?= $form->field($form_model, 'newend')->input('date')->label('Резервная дата окончания'); ?>
 <?= $form->field($form_model, 'notify')->checkbox()->label('Оповещать о начале'); ?>
-<?= $form->field($form_model, 'file')->fileInput(); ?>
 <?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
 <?php ActiveForm::end() ?>
